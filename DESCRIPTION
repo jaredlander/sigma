@@ -8,4 +8,8 @@ Maintainer: JJ Allaire <jj@rstudio.com>
 Description: Interface to sigma.js Network Visualization Library
 License: MIT + file LICENSE
 Imports:
-    htmlwidgets (>= 0.3)
+    htmlwidgets (>= 0.3),
+    rgexf,
+    igraph,
+    dplyr,
+    magrittr
