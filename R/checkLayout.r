@@ -4,7 +4,7 @@
 #' @author Jared P. Lander
 #' @aliases checkLayout
 #' @export checkLayout
-#' @import igraph layout.random
+#' @importFrom  igraph layout.random
 #' @importFrom dplyr "%>%" rename mutate
 #' @param x An igraph object
 #' @param Either a layout matrix or a function for calculating a graph's layout
