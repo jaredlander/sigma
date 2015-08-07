@@ -16,42 +16,21 @@ sigma <- function(x, ...)
 #' @rdname sigma
 #' @author Jared P. Lander
 #' @importFrom rgexf igraph.to.gexf
-#' @importFrom dplyr rename mutate
-#' @importFrom magrittr "%>%" "%<>%"
 #' @export sigma.igraph
+#' @export
 #' @param x An igraph object
 #' @param layout Either an igraph layout function or a two column matrix specifying positions
 #' @param node.size The default node.size for the nodes
 #' @param node.color Default color for nodes
 sigma.igraph <- function(x, layout=layout.random, node.size=75, node.color='blue', ...)
 {
-    ## get preferred layout
-    if(class(layout) == 'function')
-    {
-        # it's a function, let's caluclate it
-        positions <- layout(x)
-    } else if(class(layout) == 'matrix' && ncol(layout) == 2)
-    {
-        # it's a matrix, let's add as necessary
-        positions <- layout 
-    } else
-    {
-        # don't work with any other type
-        stop('"layout" must be either a graph layout function or a two-column matrix')
-    }
-    
-    positions %<>% as.data.frame %>% rename(x=V1, y=V2) %>% mutate(z=0)
+    positions <- checkLayout(x, layout)
     
     # if size is't set in the graph, set to a default
-    if(is.null(V(x)$size))
-    {
-        V(x)$size <- node.size
-    }
+    x <- setNodeSize(x, node.size)
     
-    if(is.null(V(x)$color))
-    {
-        V(x)$color <- node.color
-    }
+    # if color is't set in the graph, set to a default
+    x <- setNodeColor(x, node.color)
     
     # convert graph to gexf
     data <- igraph.to.gexf(x, position=positions)
@@ -63,23 +42,27 @@ sigma.igraph <- function(x, layout=layout.random, node.size=75, node.color='blue
 sigma.character <- function(x, ...)
 {
     # read the gexf file
-    data <- paste(readLines(gexf), collapse="\n")
+    data <- read.gexf(x)
+    
+    sigma(data, ...)
 }
 
 #' @import htmlwidgets
 #' @export sigma.gexf
+#' @export
+#' @rdname sigma
 sigma.gexf <- function(x, drawEdges = TRUE, drawNodes = TRUE, width = NULL, height = NULL)
 {
-  
-  # read the gexf file
-  #data <- paste(readLines(gexf), collapse="\n")
+    # we just want the graph component
     data <- x$graph
+    # convert it to character because that's the best for piping to json
+    data <- as.character(data)
   
-  # create a list that contains the settings
-  settings <- list(
-    drawEdges = drawEdges,
-    drawNodes = drawNodes
-  )
+    # create a list that contains the settings
+    settings <- list(
+        drawEdges = drawEdges,
+        drawNodes = drawNodes
+    )
   
   # pass the data and settings using 'x'
   x <- list(
