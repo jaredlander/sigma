@@ -7,9 +7,10 @@ Author: Alexis Jacomy and JJ Allaire
 Maintainer: JJ Allaire <jj@rstudio.com>
 Description: Interface to sigma.js Network Visualization Library
 License: MIT + file LICENSE
-Imports:
+Imports: 
     htmlwidgets (>= 0.3),
     rgexf,
     igraph,
     dplyr,
     magrittr
+Suggests: testthat
