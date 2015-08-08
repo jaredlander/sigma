@@ -23,7 +23,7 @@ checkLayout <- function(x, layout=layout.random)
     {
         # it's a function, let's caluclate it
         positions <- layout(x)
-    } else if(class(layout) == 'matrix' && ncol(layout) %in% c(2, 3))
+    } else if(class(layout) %in% c('matrix', 'data.frame') && ncol(layout) %in% c(2, 3))
     {
         # it's a matrix, let's add as necessary
         positions <- layout 
