@@ -1,5 +1,5 @@
 <!-- README.md is generated from README.Rmd. Please edit that file -->
-Adding .travis.yml to sigma. Next: \* Turn on travis for this repo at <https://travis-ci.org/profile> \* Add a travis shield to your README.md: [![Travis-CI Build Status](https://travis-ci.org/jaredlander/sigma.svg?branch=master)](https://travis-ci.org/jaredlander/sigma)
+[![Travis-CI Build Status](https://travis-ci.org/jaredlander/sigma.svg?branch=master)](https://travis-ci.org/jaredlander/sigma)
 
 ### sigma
 
