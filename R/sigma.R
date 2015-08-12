@@ -65,14 +65,15 @@ sigma.gexf <- function(x, drawEdges = TRUE, drawNodes = TRUE, width = NULL, heig
     )
   
   # pass the data and settings using 'x'
-  x <- list(
-    data = data,
-    settings = settings
-  )
-  
-  # create the widget
-  htmlwidgets::createWidget("sigma", x, width = width, height = height)
+    x <- list(
+        data = data,
+        settings = settings
+    )
+    
+    # create the widget
+    htmlwidgets::createWidget("sigma", x, width = width, height = height)
 }
+
 
 #' @export
 sigmaOutput <- function(outputId, width = "100%", height = "400px") {
