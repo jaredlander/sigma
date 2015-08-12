@@ -54,9 +54,8 @@ sigma.character <- function(x, ...)
 sigma.gexf <- function(x, drawEdges = TRUE, drawNodes = TRUE, width = NULL, height = NULL)
 {
     # we just want the graph component
-    data <- x$graph
     # convert it to character because that's the best for piping to json
-    data <- as.character(data)
+    data <- as.character(x$graph)
   
     # create a list that contains the settings
     settings <- list(
