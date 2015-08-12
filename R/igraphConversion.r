@@ -1,24 +1,18 @@
-#' @title igraphToJson
-#' @description Convert an igraph object to json
-#' @details Converts an igraph object to json with an array holding an array each for nodes and edges.
+#' @title prepIgraphConversion
+#' @description Prepares a graph for storing in standard format
+#' @details Breaks an igraph into a list holding a nodes data.frames and an edges data.frame.  The nodes data.frame has at minimum an id and label column plus any other node attributes.  The edges data.frame has at minimum an id, source and target columns plus any edge attributes.
 #' @author Jared P. Lander
-#' @aliases igraphToJson
-#' @export igraphToJson
-#' @importFrom jsonlite toJSON
+#' @aliases prepIgraphConversion
+#' @export prepIgraphConversion
+#' @importFrom igraph::get.data.frame
+#' @importFrom magritrr "%<>%"
+#' @importFrom dplyr mutate n rename select
 #' @param g An igraph object
-#' @return A string of json text representing the igraph object as an array holding an array each for nodes and edges.
+#' @return A list holding a nodes data.frames and an edges data.frame.  The nodes data.frame has at minimum an id and label column plus any other node attributes.  The edges data.frame has at minimum an id, source and target columns plus any edge attributes.
 #' @examples 
-#' data(flightGraph)
-#' igraphToJson(flightGraph)
 #' 
-igraphToJson <- function(g)
-{
-    # convert graph into a list of data.frames
-    gdata<- prepIgraphConversion(g)
-    
-    return(toJSON(gdata))
-}
-
+#' data(flightGraph)
+#' prepIgraphForGexf(flightGraph)
 prepIgraphConversion <- function(g)
 {
     # make graph into a list of data.frames
@@ -42,7 +36,28 @@ prepIgraphConversion <- function(g)
     
     return(gdata)
 }
-hike <- prepIgraphForGexf(flightGraph)
+
+
+#' @title igraphToJson
+#' @description Convert an igraph object to json
+#' @details Converts an igraph object to json with an array holding an array each for nodes and edges.
+#' @author Jared P. Lander
+#' @aliases igraphToJson
+#' @export igraphToJson
+#' @importFrom jsonlite toJSON
+#' @param g An igraph object
+#' @return A string of json text representing the igraph object as an array holding an array each for nodes and edges.
+#' @examples 
+#' data(flightGraph)
+#' igraphToJson(flightGraph)
+#' 
+igraphToJson <- function(g)
+{
+    # convert graph into a list of data.frames
+    gdata<- prepIgraphConversion(g)
+    
+    return(toJSON(gdata))
+}
 
 
 #' @title igraphToGexf
