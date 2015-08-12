@@ -12,5 +12,6 @@ Imports:
     rgexf,
     igraph,
     dplyr,
-    magrittr
+    magrittr,
+    GraphConvert
 Suggests: testthat
