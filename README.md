@@ -12,44 +12,31 @@ This package is intended as a simple demonstration of building R bindings to Jav
 You can install the **sigma** package from GitHub as follows:
 
 ``` r
-devtools::install_github("jjallaire/sigma")
+devtools::install_github("jaredlander/sigma")
 ```
 
-#### Usage
-
-The `sigma` function takes a [GEXF](http://gexf.net/format/) (Graph Exchange XML Format) file and produces an interactive visualization. For example:
+#### Examples
 
 ``` r
 library(sigma)
-sigma(system.file("examples/ediaspora.gexf.xml", package = "sigma"))
+library(igraph)
 ```
 
-You can also use the **sigma** function within [R Markdown](http://rmarkdown.rstudio.com) documents and even within [Shiny](http://shiny.rstudio.com) applications. For example:
+First a simple example with four nodes.
 
 ``` r
-library(shiny)
-library(sigma)
-
-gexf <- system.file("examples/ediaspora.gexf.xml", package = "sigma")
-
-ui = shinyUI(fluidPage(
-  checkboxInput("drawEdges", "Draw Edges", value = TRUE),
-  checkboxInput("drawNodes", "Draw Nodes", value = TRUE),
-  sigmaOutput('sigma')
-))
-
-server = function(input, output) {
-  output$sigma <- renderSigma(
-    sigma(gexf, 
-          drawEdges = input$drawEdges, 
-          drawNodes = input$drawNodes)
-  )
-}
-
-shinyApp(ui = ui, server = server)
+simple <- data.frame(from=c('a', 'b', 'c', 'a'), to=c('b', 'c', 'a', 'd'), stringsAsFactors=FALSE)
+g <- graph.data.frame(simple, directed=FALSE)
+sigma(g)
 ```
 
-#### License
+Now an example using the flights data
+
+``` r
+data(flightGraph)
+sigma(flightGraph)
+sigma(flightGraph, layout=layout_with_fr)
+```
 
     The MIT License (MIT)
 
